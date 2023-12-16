@@ -17,8 +17,13 @@
     </div>
 
     <div id="check-box-container">
-        <input type="checkbox" onchange="hide()" id="choice1">
+        <input class="check" type="checkbox" onchange="hide('check-box-container')" id="choice1">
         <label for="choice1">new todo</label>
+    </div>
+
+    <div id="check-box-container2">
+        <input class="check" type="checkbox" onchange="hide('check-box-container2')" id="choice1">
+        <label for="choice1">new todo 1</label>
     </div>
 
     <script src="todo.js"></script>
