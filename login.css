@@ -200,6 +200,27 @@ a:hover{
 
 
 
+#pass2 .listValidations{
+    text-align: left;
+    color: black;
+}
+
+
+.listValidations li{
+    padding-bottom: 0.5vh;
+    list-style: none;
+}
+.listValidations li.valid{
+    color: green;
+    font-weight: bold;
+}
+.listValidations li.invalid{
+    color: red;
+    font-weight: bold;
+}
+
+
+
 
 
 
