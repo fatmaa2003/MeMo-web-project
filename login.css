@@ -1,7 +1,7 @@
 
   @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap');
 
-  /*Full page css*/
+  
 *{
     margin: 0;
     padding: 0;
@@ -10,7 +10,7 @@
 
 }
 
-/* Body*/
+
 body{
 
     background-image: url("bg1.jpg");
@@ -21,7 +21,7 @@ body{
 
 }
 
-/* Register&forgot*/
+
 
 a{
 
