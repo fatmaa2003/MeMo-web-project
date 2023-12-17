@@ -29,9 +29,9 @@
             </div>
 
             <!--Password-->
-            <div class="input_box">
-                <input type="password" id="pass" class="input-field" required>
-                <label for="pass" class="label">password</label>
+            <div id="pass2" class="input_box">
+                <input type="password" id="pass" class="text" onkeyup="validatePassword()" required>
+                <label for="pass" class="in">password</label>
                 <i class="bx bx-lock-alt icon"></i>
 
                 <div class="listValidations">
@@ -91,23 +91,7 @@
 
     </div>
 
-   <!-- <div class="passContainer">
-        <h1 class="PassLabel">Password Validator</h1>
-        <div class="inputContainer">
-            <input type="password" id="passInput" onkeyup="validatePassword()">
-            <i class="fa-solid fa-eye" id="icon" onclick="toggleIcon()"></i>
-          <i class="icon fa-solid fa-eye-slash" onclick="toggleIcon()"></i>
-        </div>
-        <div class="listValidations">
-            <ul id="validationsList"></ul>
-            <li id="numbers">Must contain numbers</li>
-            <li id="lowercase">Must contain lowercase letters</li>
-            <li id="uppercase">Must contain uppercase letters</li>
-            <li id="specialchars">Must contain special characters</li>
-            <li id="charLen8">Must contain at least 8 characters</li>
-        </div>
-        <button class="submitButton" id="submit" onclick="submitPassword()">Submit</button>
-    </div> -->
+  
     <script src="https://kit.fontawesome.com/c9b347605f.js" crossorigin="anonymous"></script>
     <script src="login.js"></script>
     
