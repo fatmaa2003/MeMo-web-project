@@ -99,3 +99,10 @@ function submitPassword(){
         window.alert("Password is valid!");
     }
 }
+
+document.getElementById("submitbutton").addEventListener("click",handleSubmitClick);
+
+function handleSubmitClick(){
+     console.log("here");
+     window.location.href="\calendar.html";
+}

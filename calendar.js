@@ -19,18 +19,18 @@ const renderCalendar = () => {
     let liTag = "";
 
     for (let i = firstDayofMonth; i > 0; i--) { // creating li of previous month last days
-        liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
+        liTag += `<li class="inactive" onclick="navigateToDiary('${new Date(currYear, currMonth -1, lastDateofLastMonth - i + 1 )}')">${lastDateofLastMonth - i + 1}</li>`;
     }
 
     for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
         // adding active class to li if the current day, month, and year matched
         let isToday = i === date.getDate() && currMonth === new Date().getMonth() 
                      && currYear === new Date().getFullYear() ? "active" : "";
-        liTag += `<li class="${isToday}">${i}</li>`;
+        liTag += `<li class="${isToday}" onclick="navigateToDiary('${new Date(currYear, currMonth , i )}')">${i}</li>`;
     }
 
     for (let i = lastDayofMonth; i < 6; i++) { // creating li of next month first days
-        liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`
+        liTag += `<li class="inactive" onclick="navigateToDiary('${new Date(currYear, currMonth + 1 , i - lastDayofMonth + 1 )}')">${i - lastDayofMonth + 1}</li>`
     }
     currentDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
     daysTag.innerHTML = liTag;
@@ -74,4 +74,10 @@ function menuBtnChange() {
  }else {
    closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
  }
+}
+
+
+function navigateToDiary(date){
+  date =  new Date(date).getTime()
+  window.location.href=`/MeMo-web-project/diarypage.html?date=${date}`
 }

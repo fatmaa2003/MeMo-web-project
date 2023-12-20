@@ -186,6 +186,26 @@ function menuBtnChange() {
 
 
 
+// async function saveDiary(){
+//     let diary = document.getElementById('diary-text')
+//     let url = "http://localhost:3000/events"
+//     const response = await fetch(url,{
+//         method:'POST',
+//         body: {
+//             title: "new title",
+//             desc: JSON.stringify(diary.textContent)
+//         }
+//     });
+//     console.log({response})
+//     if(response.status === 200){
 
+//         alert("diary saved")
+//     }
+// }
 
+// async function updateStatus(){
+//     // let todo = 
+//     // method: 'PUT',
+
+// }
 
