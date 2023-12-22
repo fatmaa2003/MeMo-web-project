@@ -4,4 +4,3 @@ function handleSubmitClick(){
      console.log("here");
      window.location.href="\login.html";
 }
-
