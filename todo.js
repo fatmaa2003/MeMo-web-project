@@ -62,7 +62,7 @@ function addTodo(event) {
     todoInput.value = "";
 }
 
-function deleteCheck(e) {
+async function deleteCheck(e) {
     const item = e.target;
 
     if (item.classList[0] === "trash-btn") {
@@ -77,8 +77,18 @@ function deleteCheck(e) {
 
     if (item.classList[0] === "complete-btn") {
         const todo = item.parentElement;
-        todo.classList.toggle("completed");
-        console.log("toggle completed: ", todo.firstChild.innerHTML)
+        let url = `http://localhost:3000/tasks/${todo.firstChild.id}`
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+        });
+        if (response.status === 200) {
+            todo.classList.toggle("completed");
+            console.log("toggle completed: ", todo.firstChild.innerHTML)
+        }
+        
     }
 }
 
@@ -177,16 +187,19 @@ async function getTodos() {
     });
     if (response.status === 200) {
         const resp = await response.json()
-        let todos;
         tasks = resp.tasks;
         for (const task in tasks) {
             console.log({ task })
             tasks[task].forEach(function (todo) {
                 const todoDiv = document.createElement("div");
                 todoDiv.classList.add("todo");
+                if(todo.completed){
+                    todoDiv.classList.add("completed");
+                }
                 const newTodo = document.createElement("li");
                 newTodo.innerText = todo.desc;
                 newTodo.classList.add("todo-item");
+                newTodo.setAttribute("id", todo._id)
                 todoDiv.appendChild(newTodo);
 
                 const completedButton = document.createElement("button");
@@ -206,17 +219,28 @@ async function getTodos() {
     }
 }
 
-function removeLocalTodos(todo) {
-    let todos;
-    if (localStorage.getItem("todos") === null) {
-        todos = [];
-    } else {
-        todos = JSON.parse(localStorage.getItem("todos"));
-    }
+async function removeLocalTodos(todo) {
+    // let todos;
+    // if (localStorage.getItem("todos") === null) {
+    //     todos = [];
+    // } else {
+    //     todos = JSON.parse(localStorage.getItem("todos"));
+    // }
 
-    const todoIndex = todo.children[0].innerText;
-    todos.splice(todos.indexOf(todoIndex), 1);
-    localStorage.setItem("todos", JSON.stringify(todos));
+    // const todoIndex = todo.children[0].innerText;
+    // todos.splice(todos.indexOf(todoIndex), 1);
+    // localStorage.setItem("todos", JSON.stringify(todos));
+
+    let url = `http://localhost:3000/tasks/${todo.firstChild.id}`
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+    if (response.status === 200) {
+        const resp = await response.json()
+    }
 }
 
 let sidebar = document.querySelector(".sidebar");
