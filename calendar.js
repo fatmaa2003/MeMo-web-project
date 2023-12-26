@@ -6,6 +6,7 @@ prevNextIcon = document.querySelectorAll(".icons span");
 let date = new Date(),
 currYear = date.getFullYear(),
 currMonth = date.getMonth();
+let events;
 
 // storing full name of all months in array
 const months = ["January", "February", "March", "April", "May", "June", "July",
@@ -19,21 +20,26 @@ const renderCalendar = () => {
     let liTag = "";
 
     for (let i = firstDayofMonth; i > 0; i--) { // creating li of previous month last days
-        liTag += `<li class="inactive" onclick="navigateToDiary('${new Date(currYear, currMonth -1, lastDateofLastMonth - i + 1 )}')">${lastDateofLastMonth - i + 1}</li>`;
+        liTag += `<li class="inactive" onclick="navigateToDiary('${new Date(currYear, currMonth -1, lastDateofLastMonth - i + 1 ).getTime()}')">${lastDateofLastMonth - i + 1}</li>`;
     }
 
     for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
         // adding active class to li if the current day, month, and year matched
         let isToday = i === date.getDate() && currMonth === new Date().getMonth() 
                      && currYear === new Date().getFullYear() ? "active" : "";
-        liTag += `<li class="${isToday}" onclick="navigateToDiary('${new Date(currYear, currMonth , i )}')">${i}</li>`;
+        liTag += `<li class="${isToday}" onclick="navigateToDiary('${new Date(currYear, currMonth , i ).getTime()}')">${i}</li>`;
     }
 
     for (let i = lastDayofMonth; i < 6; i++) { // creating li of next month first days
-        liTag += `<li class="inactive" onclick="navigateToDiary('${new Date(currYear, currMonth + 1 , i - lastDayofMonth + 1 )}')">${i - lastDayofMonth + 1}</li>`
+        liTag += `<li class="inactive" onclick="navigateToDiary('${new Date(currYear, currMonth + 1 , i - lastDayofMonth + 1 ).getTime()}')">${i - lastDayofMonth + 1}</li>`
     }
     currentDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
-    daysTag.innerHTML = liTag;
+    daysTag.innerHTML = liTag;4
+
+    getEvents().then(e => {
+      console.log(e);
+      events = e;
+    })
 }
 renderCalendar();
 
@@ -76,8 +82,27 @@ function menuBtnChange() {
  }
 }
 
+async function getEvents(){
+  let url = `http://localhost:3000/events`
+  const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      }
+  });
+  if (response.status === 200) {
+      let resp = await response.json()
+      return resp.events;
+  }
+}
+
 
 function navigateToDiary(date){
-  date =  new Date(date).getTime()
-  window.location.href=`/MeMo-web-project/diarypage.html?date=${date}`
+  console.log(date);
+  window.location.href=`/diarypage.html?date=${date}&event=${JSON.stringify(events[date])}`
+  // if(events.date){
+  // }
+  // else{
+  //   window.location.href=`/diarypage.html?date=${date}`
+  // }
 }
