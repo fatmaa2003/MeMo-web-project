@@ -1,5 +1,5 @@
 
-function validatePassword(){
+function validatePassword() {
 
     var pass = document.getElementById("pass").value;
     var numbers = document.getElementById("numbers");
@@ -13,39 +13,39 @@ function validatePassword(){
     var uppercaseList = /[A-Z]/;
     var numbersList = /[0-9]/;
 
-    if(pass.match(numbersList)){
+    if (pass.match(numbersList)) {
         numbers.classList.remove("invalid");
         numbers.classList.add("valid");
     }
-    else{
+    else {
         numbers.classList.remove("valid");
         numbers.classList.add("invalid");
     }
-    if(pass.match(lowercaseList)){
+    if (pass.match(lowercaseList)) {
         lowercase.classList.remove("invalid");
         lowercase.classList.add("valid");
     }
-    else{
+    else {
         lowercase.classList.remove("valid");
         lowercase.classList.add("invalid");
     }
-    if(pass.match(uppercaseList)){
+    if (pass.match(uppercaseList)) {
         uppercase.classList.remove("invalid");
         uppercase.classList.add("valid");
     }
-    else{
+    else {
         uppercase.classList.remove("valid");
         uppercase.classList.add("invalid");
     }
-    if(pass.match(specialcharsList)){
+    if (pass.match(specialcharsList)) {
         specialchars.classList.remove("invalid");
         specialchars.classList.add("valid");
     }
-    else{
+    else {
         specialchars.classList.remove("valid");
         specialchars.classList.add("invalid");
     }
-    if (pass.length >= 8){
+    if (pass.length >= 8) {
         charLen8.classList.remove("invalid");
         charLen8.classList.add("valid");
     }
@@ -53,56 +53,83 @@ function validatePassword(){
         charLen8.classList.remove("valid");
         charLen8.classList.add("invalid");
     }
-                                    
+
 }
 
-function toggleIcon(){
+function toggleIcon() {
     var pass = document.getElementById("pass");
     var icon = document.getElementById("icon");
     icon.classList.toggle("fa-eye-slash");
     icon.classList.toggle("fa-eye");
     var className = icon.className;
     console.log(className);
-    if(className.match("fa-eye"))
-    {
-        pass.type = "password"; 
+    if (className.match("fa-eye")) {
+        pass.type = "password";
     }
-    if(className.match("fa-eye-slash"))
-    {
+    if (className.match("fa-eye-slash")) {
         pass.type = "text";
     }
 }
 
-function submitPassword(){
+function submitPassword() {
     var numbers = document.getElementById("numbers");
     var lowercase = document.getElementById("lowercase");
     var uppercase = document.getElementById("uppercase");
     var specialchars = document.getElementById("specialchars");
     var charLen8 = document.getElementById("charLen8");
 
-    var array = [numbers,lowercase,uppercase,specialchars,charLen8];
+    var array = [numbers, lowercase, uppercase, specialchars, charLen8];
     var classLists = [];
     var flag = 1;
-    for(var i = 0;i<5;i++)
-    {
+    for (var i = 0; i < 5; i++) {
         classLists[i] = array[i].className;
-        if(classLists[i] == "invalid")
-        {
+        if (classLists[i] == "invalid") {
             window.alert("Password is invalid!");
             flag = 0;
             break;
         }
-    } 
-    
-    if(flag == 1)
-    {
+    }
+
+    if (flag == 1) {
         window.alert("Password is valid!");
     }
 }
 
-document.getElementById("submitbutton").addEventListener("click",handleSubmitClick);
+document.getElementById("submitbutton").addEventListener("click", handleSubmitClick);
 
-function handleSubmitClick(){
-     console.log("here");
-     window.location.href="\calendar.html";
+async function handleSubmitClick() {
+    if (validateInputs()) {
+        let url = `http://localhost:3000/login`
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: document.getElementById('user').value,
+                password:  document.getElementById('pass').value
+            })
+        });
+        if (response.status === 200) {
+            let resp = await response.json()
+            // TODO: Add token to local storagey
+             window.location.href="\calendar.html";
+        }
+    }
+}
+
+function validateInputs(){
+    let username = document.getElementById('user').value
+    let password = document.getElementById('pass').value
+    if(username.trim() !== "" && password.trim() !==""){
+       if(validatePassword()){
+        return true
+       }
+       return false;
+    }
+    return false;
+}
+
+function validatePassword() {
+    return true;
 }
