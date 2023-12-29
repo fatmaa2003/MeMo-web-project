@@ -58,7 +58,8 @@ async function getDiary() {
     const dailyEvents = JSON.parse(urlParams.get('event'))
     const date = urlParams.get('date');
     console.log(dailyEvents);
-    let text = document.getElementById("diary-text")
+    let text = document.getElementById("diary-text");
+
     text.innerHTML = dailyEvents[0].desc
 }
 
@@ -71,7 +72,8 @@ async function saveDiary() {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "authorization": localStorage.getItem('tokenKey')
         },
         body: JSON.stringify({
             title: "new title",
