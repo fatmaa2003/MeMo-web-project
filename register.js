@@ -56,22 +56,7 @@ function validatePassword(){
                                     
 }
 
-function toggleIcon(){
-    var pass = document.getElementById("pass");
-    var icon = document.getElementById("icon");
-    icon.classList.toggle("fa-eye-slash");
-    icon.classList.toggle("fa-eye");
-    var className = icon.className;
-    console.log(className);
-    if(className.match("fa-eye"))
-    {
-        pass.type = "password"; 
-    }
-    if(className.match("fa-eye-slash"))
-    {
-        pass.type = "text";
-    }
-}
+
 
 function submitPassword(){
     var numbers = document.getElementById("numbers");
