@@ -384,3 +384,7 @@ select {
 /* #Search{
   
 } */
+
+.hide-element{
+  display: none;
+}
