@@ -55,12 +55,12 @@ async function getDiary() {
     // let diary = document.getElementById('diary-text')
     let queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const dailyEvents = JSON.parse(urlParams.get('event'))
+    const dailyEvents = urlParams.get('event') !== "undefined" ? JSON.parse(urlParams.get('event')) : {}
     const date = urlParams.get('date');
     console.log(dailyEvents);
     let text = document.getElementById("diary-text");
 
-    text.innerHTML = dailyEvents[0].desc
+    text.innerHTML = dailyEvents[0]?.desc
 }
 
 async function saveDiary() {
@@ -84,6 +84,16 @@ async function saveDiary() {
     console.log({ response })
     if (response.status === 200) {
         alert("diary saved")
+        let text = document.getElementById("diary-text");
+        text.innerHTML = diary.textContent.trim()
+        var queryParams = new URLSearchParams(window.location.search);
+        let updatedEvent = JSON.stringify([{ title: "new title", desc: diary.textContent.trim(), date: date }])
+        // Set new or modify existing parameter value.
+        console.log(updatedEvent)
+        queryParams.set("event", updatedEvent);
+
+        // Replace current querystring with the new one.
+        history.replaceState(null, null, "?" + queryParams.toString());
     }
 }
 
