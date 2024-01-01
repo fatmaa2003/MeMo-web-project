@@ -13,46 +13,60 @@ function validatePassword(){
     var uppercaseList = /[A-Z]/;
     var numbersList = /[0-9]/;
 
-    if(pass.match(numbersList)){
+    
+    let match = false;
+
+     if(pass.match(numbersList)){
         numbers.classList.remove("invalid");
         numbers.classList.add("valid");
+        match = true;
     }
     else{
         numbers.classList.remove("valid");
         numbers.classList.add("invalid");
+        match = false;
     }
     if(pass.match(lowercaseList)){
         lowercase.classList.remove("invalid");
         lowercase.classList.add("valid");
+        match = true;
     }
     else{
         lowercase.classList.remove("valid");
         lowercase.classList.add("invalid");
+        match = false;
     }
     if(pass.match(uppercaseList)){
         uppercase.classList.remove("invalid");
         uppercase.classList.add("valid");
+        match = true;
     }
     else{
         uppercase.classList.remove("valid");
         uppercase.classList.add("invalid");
+        match = false;
     }
     if(pass.match(specialcharsList)){
         specialchars.classList.remove("invalid");
         specialchars.classList.add("valid");
+        match = true;
     }
     else{
         specialchars.classList.remove("valid");
         specialchars.classList.add("invalid");
+        match = false;
     }
     if (pass.length >= 8){
         charLen8.classList.remove("invalid");
         charLen8.classList.add("valid");
+        match = true;
     }
     else {
         charLen8.classList.remove("valid");
         charLen8.classList.add("invalid");
+        match = false;
     }
+     return match;
                                     
 }
 
@@ -101,6 +115,41 @@ function submitPassword(){
 }
 
 document.getElementById("submitbutton").addEventListener("click",handleSubmitClick);
+
+
+async function handleSubmitClick() {
+    console.log(validatePassword());
+    if (validateInputs()) {
+         let url = `http://localhost:3000/registration`
+         const response = await fetch(url, {
+              method: 'POST',
+              headers: {
+                   "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                   email: document.getElementById('email').value,
+                   username: document.getElementById('user').value,
+                   password: document.getElementById('pass').value
+              })
+         });
+         if (response.status === 200) {
+              window.location.href = "\login.html";
+         }
+    }
+}
+
+function validateInputs() {
+    let username = document.getElementById('user').value
+    let password = document.getElementById('pass').value
+    if (username.trim() !== "" && password.trim() !== "") {
+        // console.log('jsdjsdhfsdfsdfsdfsdfsdf', submitPassword())
+         if (validatePassword()) {
+              return true;
+         }
+       return false;
+    }
+    return false;
+}
 
 
 // function submitPassword() {
