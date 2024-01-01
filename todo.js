@@ -81,6 +81,7 @@ async function deleteCheck(e) {
         const response = await fetch(url, {
             method: 'PUT',
             headers: {
+                "authorization": localStorage.getItem('tokenKey'),
                 "Content-Type": "application/json"
             },
         });
@@ -133,7 +134,8 @@ async function saveTodos(todo) {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "authorization": localStorage.getItem('tokenKey')
         },
         body: JSON.stringify({
             title: "",
@@ -237,7 +239,8 @@ async function removeLocalTodos(todo) {
     const response = await fetch(url, {
         method: 'DELETE',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "authorization": localStorage.getItem('tokenKey')
         },
     });
     if (response.status === 200) {
@@ -274,7 +277,7 @@ function todoSearch() {
     let oldTodos = document.querySelectorAll(".todo");
 
     oldTodos.forEach(oldTodo=>{
-        if(oldTodo.innerText !== searchValue && searchValue !== ""){
+        if(!oldTodo.innerText.includes(searchValue) && searchValue !== ""){
             oldTodo.classList.add("hide-element")
         }
         else{
