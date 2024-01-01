@@ -88,7 +88,7 @@ async function deleteCheck(e) {
             todo.classList.toggle("completed");
             console.log("toggle completed: ", todo.firstChild.innerHTML)
         }
-        
+
     }
 }
 
@@ -177,7 +177,8 @@ function getLocalTodos() {
     });
 }
 
-async function getTodos() {
+async function getTodos(todoDesc) {
+    console.log('aloooo', todoDesc);
     let url = "http://localhost:3000/tasks"
     const response = await fetch(url, {
         method: 'GET',
@@ -192,28 +193,56 @@ async function getTodos() {
         for (const task in tasks) {
             console.log({ task })
             tasks[task].forEach(function (todo) {
-                const todoDiv = document.createElement("div");
-                todoDiv.classList.add("todo");
-                if(todo.completed){
-                    todoDiv.classList.add("completed");
+                if (typeof todoDesc === 'string') {
+                    if (todoDesc === todo.desc) {
+                        const todoDiv = document.createElement("div");
+                        todoDiv.classList.add("todo");
+                        if (todo.completed) {
+                            todoDiv.classList.add("completed");
+                        }
+                        const newTodo = document.createElement("li");
+                        newTodo.innerText = todo.desc;
+                        newTodo.classList.add("todo-item");
+                        newTodo.setAttribute("id", todo._id)
+                        todoDiv.appendChild(newTodo);
+                        const completedButton = document.createElement("button");
+                        completedButton.innerHTML = '<i class="fas fa-check-circle"></li>';
+                        completedButton.classList.add("complete-btn");
+                        todoDiv.appendChild(completedButton);
+
+                        const trashButton = document.createElement("button");
+                        trashButton.innerHTML = '<i class="fas fa-trash"></li>';
+                        trashButton.classList.add("trash-btn");
+                        todoDiv.appendChild(trashButton);
+
+                        todoList.appendChild(todoDiv);
+                    }
+
+                } else {
+                    console.log('here');
+                    const todoDiv = document.createElement("div");
+                    todoDiv.classList.add("todo");
+                    if (todo.completed) {
+                        todoDiv.classList.add("completed");
+                    }
+                    const newTodo = document.createElement("li");
+                    newTodo.innerText = todo.desc;
+                    newTodo.classList.add("todo-item");
+                    newTodo.setAttribute("id", todo._id)
+                    todoDiv.appendChild(newTodo);
+                    const completedButton = document.createElement("button");
+                    completedButton.innerHTML = '<i class="fas fa-check-circle"></li>';
+                    completedButton.classList.add("complete-btn");
+                    todoDiv.appendChild(completedButton);
+
+                    const trashButton = document.createElement("button");
+                    trashButton.innerHTML = '<i class="fas fa-trash"></li>';
+                    trashButton.classList.add("trash-btn");
+                    todoDiv.appendChild(trashButton);
+
+                    todoList.appendChild(todoDiv);
                 }
-                const newTodo = document.createElement("li");
-                newTodo.innerText = todo.desc;
-                newTodo.classList.add("todo-item");
-                newTodo.setAttribute("id", todo._id)
-                todoDiv.appendChild(newTodo);
 
-                const completedButton = document.createElement("button");
-                completedButton.innerHTML = '<i class="fas fa-check-circle"></li>';
-                completedButton.classList.add("complete-btn");
-                todoDiv.appendChild(completedButton);
-
-                const trashButton = document.createElement("button");
-                trashButton.innerHTML = '<i class="fas fa-trash"></li>';
-                trashButton.classList.add("trash-btn");
-                todoDiv.appendChild(trashButton);
-
-                todoList.appendChild(todoDiv);
             });
         }
 
@@ -262,6 +291,14 @@ function menuBtnChange() {
     } else {
         closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
     }
+}
+
+
+
+
+function todoSearch() {
+    const searchValue = document.getElementById('todoSearchInput').value;
+    getTodos(searchValue)
 }
 
 
