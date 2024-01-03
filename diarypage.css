@@ -3,7 +3,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url(pinkbg.jpeg);
+    background-color: rgb(247, 193, 226);
 }
 
 .paper {
@@ -517,4 +517,3 @@ h3 {
       display: none;
     }
   }
-  

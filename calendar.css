@@ -1,4 +1,3 @@
-
 /* Google Font Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 *{
@@ -13,7 +12,7 @@
   top: 0;
   height: 100%;
   width: 78px;
-  background: #9B59B6;
+  background: #db73bc;
   padding: 6px 14px;
   z-index: 99;
   transition: all 0.5s ease;
@@ -242,7 +241,7 @@ body{
   padding: 0 10px;
   justify-content: center;
   min-height: 100vh;
-  background-image: url("bg1.jpg");
+  background-color: rgb(247, 193, 226);
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -330,7 +329,7 @@ header .current-date{
   transform: translate(-50%, -50%);
 }
 .days li.active::before{
-  background: #9B59B6;
+  background: #db73bc;
 }
 .days li:not(.active):hover::before{
   background: #f2f2f2;
